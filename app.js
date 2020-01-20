@@ -59,9 +59,9 @@ let transparentBlocks = require('./lookup_tables/transparent-blocks_table.json')
     runtimeIDTable = require('./lookup_tables/runtimeid_table.json'),
     monoTable = require('./lookup_tables/monochrome-textures_table.json'),
     patchTable = require('./lookup_tables/patch-textures_table.json');
-if (fs.existsSync(argv.textures + 'blocks.json')) {
+if (fs.existsSync(argv.textures + '/blocks.json')) {
     textureTable = JSON.parse(stripJsonComments(fs.readFileSync(path.normalize(argv.textures + '/textures/terrain_texture.json')).toString())),
-    blockTable = JSON.parse(stripJsonComments(fs.readFileSync(path.normalize(argv.textures + 'blocks.json')).toString()));
+    blockTable = JSON.parse(stripJsonComments(fs.readFileSync(path.normalize(argv.textures + '/blocks.json')).toString()));
 } else {
     textureTable = null;
     blockTable = null;
@@ -89,7 +89,7 @@ if (cluster.isMaster) {
 
     // Download textures if textures can't be found
     new Promise((resolve, reject) => {
-        if ((argv['force-download'] === true) || (!fs.existsSync(path.normalize(argv.textures + 'blocks.json')))) {
+        if ((argv['force-download'] === true) || (!fs.existsSync(path.normalize(argv.textures + '/blocks.json')))) {
             console.log('Texture directory is missing or ' + colors.italic('--force-download') + ' has been specified. Downloading...');
             require('./downloadTextures.js')(path.resolve(argv.textures))
                 .then(() => { resolve(); })
